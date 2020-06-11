@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 card card-body bg-light mb-2 mt-2">
+   
+
+        <div class="row">
+            <div class="col-md-3">
+              <label for="name" class="control-label">Numero Identificacion</label>
+            </div>
+            <div class="col-md-7">
+              <span name="name">
+                {{user?.numberId}}
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <label for="name" class="control-label">Apellidos</label>
+            </div>
+            <div class="col-md-7">
+              <span name="name">
+                {{user?.firstName}}
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <label for="name" class="control-label">Nombre</label>
+            </div>
+            <div class="col-md-7">
+              <span name="name">
+                {{user?.lastName}}
+              </span>
+            </div>
+          </div>
+          
+         
+
+
+      </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-md-offset-8 col-md-1">
+          <button type="submit" class="btn btn-info" (click)="deleteUser()">Borrar</button>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-danger" (click)="redirectToUserList()">Cancelar</button>
+        </div>
+      </div>
+  </div>
+
+  <app-success-modal [modalHeaderText]="'Operacion Finalizada'" [modalBodyText]="'Proceso terminado con exitosamente'" [okButtonText]="'OK'" (redirectOnOK)="redirectToUserList()"></app-success-modal>
+  <app-error-modal [modalHeaderText]="'Operacion Cancelada'"  [modalBodyText]="'Se ha presentado un Error'" [okButtonText]="'OK'"></app-error-modal>
+

@@ -1,0 +1,68 @@
+	
+<div class="card card-body bg-light mb-2 mt-2">
+    <div class="row">
+      <div class="col-md-3">
+        <strong>id:</strong>
+      </div>
+      <div class="col-md-3">
+        {{user?.userId}}
+      </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+          <strong>Nombre:</strong>
+        </div>
+        <div class="col-md-3">
+          {{user?.firstName}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <strong>Apellido:</strong>
+        </div>
+        <div class="col-md-3">
+          {{user?.lastName}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <strong>Tipo Identificacion:</strong>
+        </div>
+        <div class="col-md-3">
+          {{nameType}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <strong>Numero Identificacion:</strong>
+        </div>
+        <div class="col-md-3">
+          {{user?.numberId}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <strong>Contraseña:</strong>
+        </div>
+        <div class="col-md-3">
+          {{user?.password}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <strong>Email:</strong>
+        </div>
+        <div class="col-md-3">
+          {{user?.email}}
+        </div>
+      </div>
+
+      
+  </div>
+  <div class="form-group row">
+    <div class="col-md-1">
+        <button type="button" class="btn btn-success" (click)="redirectToUserList()">Regresar</button>
+    </div>
+</div>
+   
+  

@@ -1,0 +1,99 @@
+<div class="container-fluid">
+    <form [formGroup]="userForm" autocomplete="off" novalidate (ngSubmit)="createUser(userForm.value)">
+      <div class="form-horizontal card card-body bg-light mb-2 mt-2">
+   
+        <div class="form-group row">
+          <label for="firstName" class="control-label col-md-2">Nombres: </label>
+          <div class="col-md-5">
+            <input type="text" formControlName="firstName" id="firstName" class="form-control" />
+          </div>
+          <div class="col-md-5">
+            <em *ngIf="validateControl('firstName') && hasError('firstName', 'required')">Nombres Requeridos</em>
+            <em *ngIf="validateControl('firstName') && hasError('firstName', 'maxlength')">Maximo 60 caracteres.</em>
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="lastName" class="control-label col-md-2">Apellidos: </label>
+            <div class="col-md-5">
+              <input type="text" formControlName="lastName" id="lastName" class="form-control" />
+            </div>
+            <div class="col-md-5">
+              <em *ngIf="validateControl('lastName') && hasError('lastName', 'required')">Apellidos Requeridos</em>
+              <em *ngIf="validateControl('lastName') && hasError('lastName', 'maxlength')">Maximo 60 caracteres.</em>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="typeIdentificationId" class="control-label col-md-2">Tipo Identificacion: </label>
+            <div class="col-md-5">
+              <select class="browser-default custom-select" formControlName="typeIdentificationId" id="typeIdentificationId">
+                <option *ngFor="let type of types" value={{type.typeIdentificationId}}>
+                  {{type.name}}
+                </option>
+              </select>
+              <!-- <input type="text" formControlName="typeIdentificationId" id="typeIdentificationId" class="form-control" /> -->
+            
+            </div>
+            <div class="col-md-5">
+              <em *ngIf="validateControl('typeIdentificationId') && hasError('typeIdentificationId', 'required')">Requerido</em>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="numberId" class="control-label col-md-2">Numero Identificacion: </label>
+            <div class="col-md-5">
+              <input type="text" formControlName="numberId" id="numberId" class="form-control" />
+            </div>
+            <div class="col-md-5">
+              <em *ngIf="validateControl('numberId') && hasError('numberId', 'required')">Requerido</em>
+              <em *ngIf="validateControl('numberId') && hasError('numberId', 'maxlength')">Maximo 20 caracteres.</em>
+              <em *ngIf="validateControl('numberId') && hasError('numberId', 'pattern')">Debe ser solo valores numericos</em>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="password" class="control-label col-md-2">Contraseña: </label>
+            <div class="col-md-5">
+              <input type="text" formControlName="password" id="password" class="form-control" />
+            </div>
+            <div class="col-md-5">
+              <em *ngIf="validateControl('password') && hasError('password', 'required')">Requerido</em>
+              <em *ngIf="validateControl('password') && hasError('password', 'maxlength')">Maximo 20 caracteres.</em>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="email" class="control-label col-md-2">Email: </label>
+            <div class="col-md-5">
+              <input type="text" formControlName="email" id="email" class="form-control" />
+            </div>
+            <div class="col-md-5">
+              <em *ngIf="validateControl('email') && hasError('email', 'required')">Requerido</em>
+              <em *ngIf="validateControl('email') && hasError('email', 'maxlength')">Maximo 80 caracteres.</em>
+              <em *ngIf="validateControl('email') && hasError('email', 'email')">Email Incorrecto.</em>
+            </div>
+          </div>
+   
+       
+   
+        <br><br>
+   
+        <div class="form-group row">
+            <div class="offset-5 col-md-1"  style="margin-left: 280px;margin-right: 50px;">
+                <button type="submit" class="btn btn-info" [disabled]="!userForm.valid">Guardar</button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-danger" (click)="redirectToUserList()">Cancelar</button>
+            </div>
+        </div>
+        
+        
+      </div>
+    </form>
+   
+    <app-success-modal [modalHeaderText]="'Operacion Finalizada'" [modalBodyText]="'Proceso terminado con exitosamente'" [okButtonText]="'OK'" (redirectOnOK)="redirectToUserList()"></app-success-modal>
+   
+    <app-error-modal [modalHeaderText]="'Operacion Cancelada'"  [modalBodyText]="'Se ha presentado un Error'" [okButtonText]="'OK'"></app-error-modal>
+   
+  </div>

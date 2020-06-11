@@ -1,0 +1,80 @@
+
+
+
+<section id="cover" class="min-vh-100">
+    <div id="cover-caption">
+        <div class="container">
+            <div class="row text-white">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+                    <h1 class="display-4 py-2 text-truncate">Ingresar</h1>
+                    <div class="px-2">
+
+
+
+                        <form [formGroup]="userForm" autocomplete="off" novalidate
+                            (ngSubmit)="loginUser(userForm.value)" class="justify-content-center">
+
+
+                        <div class="form-group">
+                            <label for="numberId">Numero Identificacion: </label>
+                            <input type="text" formControlName="numberId" id="numberId" class="form-control" />
+                            <div>
+                                <em
+                                    *ngIf="validateControl('numberId') && hasError('numberId', 'required')">Requerido</em>
+                                <em *ngIf="validateControl('numberId') && hasError('numberId', 'maxlength')">Maximo 20
+                                    caracteres.</em>
+                                <em *ngIf="validateControl('numberId') && hasError('numberId', 'pattern')">Debe ser solo
+                                    valores
+                                    numericos</em>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Contraseña: </label>
+                                <input type="password" formControlName="password" id="password" class="form-control" />
+                            <div>
+                                <em
+                                    *ngIf="validateControl('password') && hasError('password', 'required')">Requerido</em>
+                                <em *ngIf="validateControl('password') && hasError('password', 'maxlength')">Maximo 20
+                                    caracteres.</em>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-info" [disabled]="!userForm.valid">Ingresar</button>
+                        Crear Cuenta?<a [routerLink]="['/user/create']">Registrarse</a>
+
+                        </form>
+
+                        
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-success-modal [modalHeaderText]="'Operacion Finalizada'" [modalBodyText]="'Ingreso exitosamente'" [okButtonText]="'OK'" (redirectOnOK)="redirectToUserList()"></app-success-modal>
+   
+<app-error-modal [modalHeaderText]="'Operacion Cancelada'"  [modalBodyText]="'Usuario o Constraseña Incorrecta'" [okButtonText]="'OK'"></app-error-modal>
+
+
+ 
+
+
+
+                        
+
+
+
+                   
+  
+
+
+
+
+
+  
+
+  
+

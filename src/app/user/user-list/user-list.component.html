@@ -1,0 +1,40 @@
+<p></p>
+
+<div class="row"> 
+    <div class="col-md-offset-10 col-md-2">
+        <a [routerLink]="['/user/create']">Crear Usuario</a>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Apellidos</th>
+              <th>Identificacion</th>
+              <th>Detalle</th>
+              <th>Editar</th>
+              <th>Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{user.userId}}</td>
+              <td>{{user.firstName}}</td>
+              <td>{{user.lastName}}</td>
+              <td>{{user.numberId}}</td>
+              <td><button type="button" id="details" class="btn btn-light" 
+                (click)="getUserDetails(user.userId)">Detalle</button></td>
+              <td><button type="button" id="update" class="btn btn-success" (click)="redirectToUpdatePage(user.userId)">Editar</button></td>
+              <td><button type="button" id="delete" class="btn btn-danger" (click)="redirectToDeletePage(user.userId)">Borrar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
