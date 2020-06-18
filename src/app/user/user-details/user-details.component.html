@@ -5,12 +5,12 @@
         <strong>id:</strong>
       </div>
       <div class="col-md-3">
-        {{user?.userId}}
+        {{user?.idEmployee}}
       </div>
     </div>
     <div class="row">
         <div class="col-md-3">
-          <strong>Nombre:</strong>
+          <strong>Nombres:</strong>
         </div>
         <div class="col-md-3">
           {{user?.firstName}}
@@ -18,7 +18,7 @@
       </div>
       <div class="row">
         <div class="col-md-3">
-          <strong>Apellido:</strong>
+          <strong>Apellidos:</strong>
         </div>
         <div class="col-md-3">
           {{user?.lastName}}
@@ -29,7 +29,11 @@
           <strong>Tipo Identificacion:</strong>
         </div>
         <div class="col-md-3">
-          {{nameType}}
+          <select class="browser-default custom-select"  disabled [(ngModel)]="selectedTypeValue"  id="typeIdentificationId">
+            <option *ngFor="let type of types" [ngValue]="type.idTypeIdentification">
+              {{type.name}}
+            </option>
+          </select>
         </div>
       </div>
       <div class="row">
@@ -37,25 +41,35 @@
           <strong>Numero Identificacion:</strong>
         </div>
         <div class="col-md-3">
-          {{user?.numberId}}
+          {{user?.numberDocument}}
         </div>
       </div>
       <div class="row">
         <div class="col-md-3">
-          <strong>Contraseña:</strong>
+          <strong>Area:</strong>
         </div>
         <div class="col-md-3">
-          {{user?.password}}
+          <select class="browser-default custom-select"  disabled [(ngModel)]="selectedAreaValue"  id="idArea">
+            <option *ngFor="let area of areas" [ngValue]="area.idArea">
+              {{area.name}}
+            </option>
+          </select>
         </div>
       </div>
       <div class="row">
         <div class="col-md-3">
-          <strong>Email:</strong>
+          <strong>SubArea:</strong>
         </div>
         <div class="col-md-3">
-          {{user?.email}}
+          <select class="browser-default custom-select"  disabled [(ngModel)]="selectedSubAreaValue"  id="idSubAreaSelect">
+            <option *ngFor="let subArea of subAreas" [ngValue]="subArea.idSubArea">
+              {{subArea.name}}
+            </option>
+          </select>
         </div>
       </div>
+     
+      
 
       
   </div>

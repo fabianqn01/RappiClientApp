@@ -7,6 +7,8 @@ import { User } from './../../interfaces/user.model';
 import { UserForCreation } from './../../interfaces/user-for-creation.model';
 import { TypeForLoad } from './../../interfaces/type-for-load';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Area } from 'src/app/interfaces/area.model';
+import { SubArea } from 'src/app/interfaces/subArea.model';
  
 @Component({
   selector: 'app-user-update',
@@ -16,10 +18,15 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 export class UserUpdateComponent implements OnInit {
  
   public errorMessage: string = '';
-  public user: UserForCreation;
+  public user: User;
   public userForm: FormGroup;
-  public userID: number=0;
   public types: TypeForLoad [];
+  public areas: Area [];
+  public subAreas: SubArea [];
+  public subArea: SubArea;
+  selectedTypeValue = 0; // Iniciamos
+  selectedAreaValue = 0; // Iniciamos
+  selectedSubAreaValue = 0; // Iniciamos
  
   constructor(private repository: RepositoryService, private errorHandler: ErrorHandlerService, private router: Router,
     private activeRoute: ActivatedRoute) { }
@@ -27,17 +34,18 @@ export class UserUpdateComponent implements OnInit {
     ngOnInit() {
 
       this.getTypes();
+      this.getAreas();
+      this.getUserDetails();
 
       this.userForm = new FormGroup({
-        firstName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
-      lastName: new FormControl('', [Validators.required, Validators.maxLength(60)]),
-      typeIdentificationId: new FormControl('', [Validators.required]),
-      numberId: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern("^[0-9]*$")]),
-      password: new FormControl('', [Validators.required, Validators.maxLength(20),]),
-      email: new FormControl('', [Validators.required, Validators.maxLength(80),,Validators.email])
+      firstName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      lastName: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+      idTypeIdentification: new FormControl('', [Validators.required]),
+      numberDocument: new FormControl('', [Validators.required, Validators.maxLength(20), Validators.pattern("^[0-9]*$")]),
+      idArea: new FormControl('', [Validators.required]),
+      idSubArea: new FormControl('', [Validators.required])
       });
-     
-      this.getUserById();
+
     }
      
 
@@ -52,22 +60,77 @@ export class UserUpdateComponent implements OnInit {
         this.errorMessage = this.errorHandler.errorMessage;
       })
     }
-
-    private getUserById = () => {
-       this.userID  = this.activeRoute.snapshot.params['id'];
+  
+    public getAreas = () => {
+      let apiAddress: string = "api/area";
+      this.repository.getData(apiAddress)
+      .subscribe(res => {
+        this.areas = res as Area[];
         
-      let userByIdUrl: string = `api/user/${this.userID}`;
-     
-      this.repository.getData(userByIdUrl)
-        .subscribe(res => {
-          this.user = res as UserForCreation;
-          this.userForm.patchValue(this.user);
-          
-        },
-        (error) => {
-          this.errorHandler.handleError(error);
-          this.errorMessage = this.errorHandler.errorMessage;
-        })
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      })
+    }
+
+    public getSubAreas = () => {
+      let apiAddress: string = `api/area/${this.selectedAreaValue}/`;
+      this.repository.getData(apiAddress)
+      .subscribe(res => {
+        this.subAreas = res as SubArea[];
+        this.selectedSubAreaValue = this.user.idSubArea;
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      })
+    }
+  
+    public onOptionsSelectedArea = () => {
+      let apiAddress: string = `api/area/${this.selectedAreaValue}/`;
+      this.repository.getData(apiAddress)
+      .subscribe(res => {
+        this.subAreas = res as SubArea[];
+        this.selectedSubAreaValue = this.subAreas.length < 1 ? null : this.subAreas[0].idSubArea;
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      })
+    }
+
+    public getSubAreaByID = () => {
+      let apiAddress: string = `api/area/getSubAreaByID/${this.user.idSubArea}/`;
+      this.repository.getData(apiAddress)
+      .subscribe(res => {
+        this.subArea = res as SubArea;
+        this.selectedAreaValue = this.subArea.idArea;
+        this.getSubAreas();
+      },
+      (error) => {
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      })
+    }
+   
+    getUserDetails = () => {
+      let id: string = this.activeRoute.snapshot.params['id'];
+      let apiUrl: string = `api/employee/GetEmployeeByID/${id}/`;
+   
+      this.repository.getData(apiUrl)
+      .subscribe(res => {
+        this.user = res as User;
+        this.userForm.patchValue(this.user);
+        this.selectedTypeValue =  this.user.idTypeIdentification;
+        //this.selectedSubAreaValue = this.user.idSubArea;
+        this.getSubAreaByID();
+        
+      },
+      (error) =>{
+        this.errorHandler.handleError(error);
+        this.errorMessage = this.errorHandler.errorMessage;
+      })
     }
 
     public validateControl = (controlName: string) => {
@@ -99,13 +162,11 @@ export class UserUpdateComponent implements OnInit {
      
       this.user.firstName = userFormValue.firstName;
       this.user.lastName = userFormValue.lastName;
-      this.user.typeIdentificationId = userFormValue.typeIdentificationId;
-      this.user.numberId = userFormValue.numberId;
-      this.user.password = userFormValue.password;
-      this.user.email = userFormValue.email;
+      this.user.idTypeIdentification = userFormValue.idTypeIdentification;
+      this.user.numberDocument = userFormValue.numberDocument;
+      this.user.idSubArea = userFormValue.idSubArea;
      
-      const apiUrl = `api/user/${this.userID}`;
-      this.user.UserId = this.userID;
+      const apiUrl = `api/employee/`;
       this.repository.update(apiUrl, this.user)
         .subscribe(res => {
           $('#successModal').modal();

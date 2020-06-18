@@ -8,6 +8,7 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserUpdateComponent } from './user-update/user-update.component';
 import { UserDeleteComponent } from './user-delete/user-delete.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,12 +17,14 @@ import { UserDeleteComponent } from './user-delete/user-delete.component';
     CommonModule,
     SharedModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterModule.forChild([
       { path: 'list', component: UserListComponent },
       { path: 'details/:id', component: UserDetailsComponent },
       { path: 'create', component: UserCreateComponent },
       { path: 'update/:id', component: UserUpdateComponent },
       { path: 'delete/:id', component: UserDeleteComponent }
+
     ])
   ],
   declarations: [

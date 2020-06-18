@@ -1,12 +1,11 @@
 
 export interface User{
 
-        userId: number;
+        idEmployee: number;
+        idTypeIdentification: number;
+        numberDocument: string;
         firstName: string;
         lastName: string;
-        typeIdentificationId: number;
-        numberId: number;
-        password: string;
-        email: string;
+        idSubArea: number;
 }
 

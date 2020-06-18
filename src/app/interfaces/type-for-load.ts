@@ -1,4 +1,4 @@
 export interface TypeForLoad {
-    TypeIdentificationId : number;
+    IdTypeIdentification : number;
     Name:string
 }

@@ -12,8 +12,8 @@ import { UserForCreation } from './../../interfaces/user-for-creation.model';
 })
 export class UserDeleteComponent implements OnInit {
   public errorMessage: string = '';
-  public user: UserForCreation;
-  public userID: number=0;
+  public user: User;
+  public id: number=0;
  
 constructor(private repository: RepositoryService, private errorHandler: ErrorHandlerService, private router: Router,
   private activeRoute: ActivatedRoute) { }
@@ -23,13 +23,13 @@ constructor(private repository: RepositoryService, private errorHandler: ErrorHa
   }
    
   private getUserById = () => {
-    this.userID  = this.activeRoute.snapshot.params['id'];
+    this.id  = this.activeRoute.snapshot.params['id'];
     
-    const userByIdUrl: string = `api/user/${this.userID}`;
+    let apiUrl: string = `api/employee/GetEmployeeByID/${this.id}/`;
    
-    this.repository.getData(userByIdUrl)
+    this.repository.getData(apiUrl)
       .subscribe(res => {
-        this.user = res as UserForCreation;
+        this.user = res as User;
       },
       (error) => {
         this.errorHandler.handleError(error);
@@ -42,7 +42,7 @@ constructor(private repository: RepositoryService, private errorHandler: ErrorHa
   }
 
   public deleteUser = () => {
-    const deleteUrl: string = `api/user/${this.userID}`;
+    const deleteUrl: string = `api/employee/${this.id}`;
     this.repository.delete(deleteUrl)
       .subscribe(res => {
         $('#successModal').modal();
